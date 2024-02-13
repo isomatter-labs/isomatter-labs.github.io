@@ -1,8 +1,10 @@
 ---
-title: Same Bean, Different Burrito, \nor,\n It's all just composability, do what you want
+title: Same Bean, Different Burrito
 author: M Cooper Healy
 date: 10 Feb 2024
 ---
+
+> It's all just composability, do what you want
 
 # The Editor(s) of a Lifetime
 
