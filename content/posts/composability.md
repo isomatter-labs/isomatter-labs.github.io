@@ -1,6 +1,5 @@
 ---
-title: Same Bean, Different Burrito
-subtitle: It's all just composability, do what you want
+title: Same Bean, Different Burrito, \nor,\n It's all just composability, do what you want
 author: M Cooper Healy
 date: 10 Feb 2024
 ---
