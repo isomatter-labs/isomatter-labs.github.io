@@ -7,7 +7,7 @@ date: 10 Feb 2024
 
 # The Editor(s) of a Lifetime
 
-I first started using Emacs in 2010, as a 12 year old. At the time, my
+I first started using Emacs in 2008, as a 12 year old. At the time, my
 reasoning was simple: I didn't want to figure out Vim modes. I had just
 gotten into Linux for the first time, and was overwhelmed with excitement.
 
