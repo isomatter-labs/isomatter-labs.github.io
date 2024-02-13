@@ -44,7 +44,7 @@ terminal for years, so it didn't take me long to get back up to speed.
 
 This time, however, I was determined to do it right.
 I spent hours on my config -- writing and re-writing it.
-I avoided distrobutions, and was determined to `elisp` my way to mastery.
+I avoided distributions, and was determined to `elisp` my way to mastery.
 I read Mikey Petersen's book _Mastering Emacs_, and I used it to dive deep
 into Emacs' workings.
 I made it pretty, creating my own theme, and my own
