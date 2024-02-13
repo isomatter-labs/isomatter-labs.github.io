@@ -120,11 +120,9 @@ or web browsing,
 or window management.
 Not because I had a philosophical problem with it, I just always held out
 that I wanted to use my operating system. Emacs was my IDE, not my computer[^1].
+I tried it a few times, but it very rarely lasted more than a day or two.
 
-Because of that line, however, I wasn't really using Emacs the way it was
-meant to be used.
-
-I wasn't living in my "Lisp Machine" -- I never had been.
+As a result, I wasn't really using my "Lisp Machine" -- I never had been.
 
 I was only experiencing that phenomenal introspection when I was updating my
 config. It wasn't part of my workflow, it wasn't part of my tooling.
@@ -200,6 +198,27 @@ my tooling, and just do work.
 Sometimes it's best to let your editor be an editor,
 and your operating system, an operating system.
 
+# The Point
+
+All this is to say: most good tools are built on exactly the same ideals:
+taking a bunch of small, composable parts, and combining them to solve the
+problem at hand.
+
+Emacs solves this with packages and an extensible lisp environment.
+Atom and VSCode solved this with extensions.
+Neovim solves this with a combination of extensions and piping to the shell.
+Acme solves it with Plan9's "plumbing"[^3].
+
+It's easy to notice this composability in your chosen tool and see it's
+apparent uniquity, but it's important to realize tha the core idea,
+composability,
+is achievable through many means.
+
+As for me, I appreciate the balance Neovim strikes by having it's composability
+split between packages and using external tools. It feels like a happy medium
+between the all-encompassing-tool that is Emacs or an IDE, and the
+OS-is-your-tool approach of things like Acme, or just using `sed`.
+
 [^1]: I want to clarify that I can totally understand why people _do_ kitchen sink Emacs; it just isn't for me.
 [^2]: This is the point where rather veteran Emacsen say
     "Well, then you weren't _really_ using Emacs!" Okay, sure, let's do the
@@ -207,8 +226,9 @@ and your operating system, an operating system.
     in all honesty, more time than was reasonable in customizing and tweaking
     my Emacs workflow, going all the way from minimal to kitchen sink and back,
     with frequent stops at having my Linux boxes boot directly into it.
-    I was using it constantly, and for everything, and i genuinely _loved_ it.
+    I was using it constantly, and for everything, and I genuinely _loved_ it.
     Living in the alternate reality of the Lisp Machine Cinematic Universe just
     got really old after having to reinvent _every_ wheel for 5 years. Take
     this as my personal apology that I didn't understand Emacs as well as you,
     and that you are simply too wise to learn anything from this essay.
+[^3]: A topic for another time, but absolutely worth the rabbithole.
