@@ -291,7 +291,7 @@ inspiration; sometimes you find things you never knew you wanted.
     compatible.
 
 [^4]:
-    This is both admirable and the reason TJ DeVries\[fn:tj\] refers
+    This is both admirable and the reason TJ DeVries(https://youtube.com/c/tjdevries) refers
     to NeoVim as a Programmable Development Environment, rather than an
     editor.
 
