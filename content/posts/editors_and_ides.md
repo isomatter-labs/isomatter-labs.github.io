@@ -278,8 +278,8 @@ and it's _definitely_ always worth it to look to the past for
 inspiration; sometimes you find things you never knew you wanted.
 
 [^1]:
-    Squeak(<https://squeak.org>) is my favorite Smalltalk
-    implementation at the moment, but Pharo(<https://pharo.org>) is
+    [Squeak](<https://squeak.org>) is my favorite Smalltalk
+    implementation at the moment, but [Pharo](<https://pharo.org>) is
     often cited as more modern/cutting edge.
 
 [^2]: Assuming that you dont _want_ to ship users an editing suite.
@@ -291,7 +291,7 @@ inspiration; sometimes you find things you never knew you wanted.
     compatible.
 
 [^4]:
-    This is both admirable and the reason TJ DeVries(https://youtube.com/c/tjdevries) refers
+    This is both admirable and the reason [TJ DeVries](https://youtube.com/c/tjdevries) refers
     to NeoVim as a Programmable Development Environment, rather than an
     editor.
 
