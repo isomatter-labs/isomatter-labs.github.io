@@ -50,10 +50,6 @@ to refer to it as an \"environment\". That having been said, the
 philosophy has some merit even in the real world, where Workshops cannot
 exist in most production codebases (for reasons I'll touch on later).
 
-- Emacs is an IDE
-- NeoVim (with plugins) is an IDE
-- VSCode is an IDE
-
 ### A Real Try™ With an IDE
 
 I recently activated a 30-day Trial of JetBrains' WebStorm, and have
