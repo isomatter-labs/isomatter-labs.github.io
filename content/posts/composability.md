@@ -80,7 +80,7 @@ Emacs is a living, breathing workspace, where you can look at everything,
 touch everything,
 manipulate everything -- all without needing to reboot or re-source a config.
 
-`M-:`, the keymap for  `eval-expression`, became my favorite command overnight.
+`M-:`, the keymap for `eval-expression`, became my favorite command overnight.
 The ability to open an `elisp` repl and just _do stuff_ was an intoxicating
 level of power. It was like seeing into the matrix.
 
@@ -88,7 +88,7 @@ Most editors have something like a command palette:
 
 - VSCode has its `Ctrl-Shift-P` "Command Pallette"
 - Vim/Neovim has its `:` "Command Mode"
-- Emacs has its `M-x` `execute-extended-command` (its a command palette for interactive functions)
+- Emacs has its `M-x` `execute-extended-command` (it's a command palette for interactive functions)
 
 But of those, only Emacs has `M-:`.
 
@@ -211,7 +211,7 @@ Neovim solves this with a combination of extensions and piping to the shell.
 Acme solves it with Plan9's "plumbing"[^3].
 
 It's easy to notice this composability in your chosen tool and see it's
-apparent uniquity, but it's important to realize tha the core idea,
+apparent uniquity, but it's important to realize that the core idea,
 composability,
 is achievable through many means.
 
@@ -221,7 +221,8 @@ between the all-encompassing-tool that is Emacs or an IDE, and the
 OS-is-your-tool approach of things like Acme, or just using `sed`.
 
 [^1]: I want to clarify that I can totally understand why people _do_ kitchen sink Emacs; it just isn't for me.
-[^2]: This is the point where rather veteran Emacsen say
+[^2]:
+    This is the point where rather veteran Emacsen say
     "Well, then you weren't _really_ using Emacs!" Okay, sure, let's do the
     no-true-scotsman argument. The reality of the situation was that I had spent,
     in all honesty, more time than was reasonable in customizing and tweaking
@@ -232,4 +233,5 @@ OS-is-your-tool approach of things like Acme, or just using `sed`.
     got really old after having to reinvent _every_ wheel for 5 years. Take
     this as my personal apology that I didn't understand Emacs as well as you,
     and that you are simply too wise to learn anything from this essay.
+
 [^3]: A topic for another time, but absolutely worth the rabbithole.
