@@ -1,7 +1,7 @@
 ---
 title: Same Bean, Different Burrito
 author: M Cooper Healy
-date: 10 Feb 2024
+date: 2024-02-10
 ---
 
 > It's all just composability, do what you want
@@ -221,6 +221,7 @@ between the all-encompassing-tool that is Emacs or an IDE, and the
 OS-is-your-tool approach of things like Acme, or just using `sed`.
 
 [^1]: I want to clarify that I can totally understand why people _do_ kitchen sink Emacs; it just isn't for me.
+
 [^2]:
     This is the point where rather veteran Emacsen say
     "Well, then you weren't _really_ using Emacs!" Okay, sure, let's do the

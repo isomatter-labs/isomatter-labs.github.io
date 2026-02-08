@@ -1,7 +1,7 @@
 ---
 title: Editors and IDEs
 author: M Cooper Healy
-date: 15 Jul 2025
+date: 2025-07-15
 ---
 
 # Introduction: The Pondering
@@ -278,11 +278,12 @@ and it's _definitely_ always worth it to look to the past for
 inspiration; sometimes you find things you never knew you wanted.
 
 [^1]:
-    [Squeak](<https://squeak.org>) is my favorite Smalltalk
-    implementation at the moment, but [Pharo](<https://pharo.org>) is
+    [Squeak](https://squeak.org) is my favorite Smalltalk
+    implementation at the moment, but [Pharo](https://pharo.org) is
     often cited as more modern/cutting edge.
 
 [^2]: Assuming that you dont _want_ to ship users an editing suite.
+
 [^3]:
     Notably, Electron apps and/or web apps are the closest thing to
     this mythical IDE that still exists, but exist solely on the virtue

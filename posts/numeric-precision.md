@@ -2,38 +2,47 @@
 title: Number Precision
 subtitle: What It Is, and Why It Matters
 author: M Cooper Healy
-date: 6 Feb 2026
+date: 2026-02-06
 ---
 
 # What is a `number` anyway?
 
 Javascript (and by extension TypeScript) use 64-bit floating point numbers as the backing type for number.
-We will use 32-bit floaring point numbers throughout this document for brevity and clarity.
+We will use 32-bit floating point numbers throughout this document for brevity and clarity.
+
 The operant difference is that 64-bit floating point numbers have more precision.
+
 As we have seen in recent bugs in our monetary calculations in NY, this precision is still not enough.
 
 This may raise a further question as to what that means.
+
 Floating point numbers are, essentially, scientific notation using binary numbers.
 
 In the event that the reader is unfamiliar with the purpose and usage of scientific notation, the following section breaks down its main advantages.
 
 # Scientific Notation
 
-Scientific notation is often seen in STEM-related academic settings, and is of the form 6.022 ×1023. (For those curious, this is Avogadro’s number, or the number of molecules present in a mole of gas at one atmosphere of pressure and 0°C) It is intended as a convenient way to show arbitrarily large or small numbers at a given, useful precision. In our example (Avogadro’s number), we have a precision of four significant digits, which is plenty for most chemical calculations. If we were to write this number in regular notation, it would take the following, borderline useless, form: 602200000000000000000000 While this gives a more obvious view of the scale involved, it removes two valuable things: 1. Definite precision (are the zeros really zeros? This is actually an open question) 2. The ability to fit it in formulas (a 50-character formula is hard to parse, and harder still to keep the number of zeros straight) Scientific notation gives us the ability to be precise about both the scale and the precision that we care about. In this case, we are saying that we explicitly only care about four significant digits (which is now the implicit upper bound for any calculation we do with this number), and that we are operating with a number in the sextillions.
+Scientific notation is often seen in STEM-related academic settings, and is of the form $6.022 \times 10^{23}$. (For those curious, this is Avogadro’s number, or the number of molecules present in a mole of gas at one atmosphere of pressure and 0°C) It is intended as a convenient way to show arbitrarily large or small numbers at a given, useful precision. In our example (Avogadro’s number), we have a precision of four significant digits, which is plenty for most chemical calculations. If we were to write this number in regular notation, it would take the following, borderline useless, form: $602200000000000000000000$
+
+While this gives a more obvious view of the scale involved, it removes two valuable things:
+
+1. Definite precision (are the zeros really zeros? This is actually an open question)
+2. The ability to fit it in formulas (a 50-character formula is hard to parse, and harder still to keep the number of zeros straight)
+
+Scientific notation gives us the ability to be precise about both the scale and the precision that we care about. In this case, we are saying that we explicitly only care about four significant digits (which is now the implicit upper bound for any calculation we do with this number), and that we are operating with a number in the sextillions.
 
 ## Exponent
 
-The exponent simply refers to the exponent used in the second term of the number in scientific notation. In this case, 6.022 ×1023 has an exponent of 23.
+The exponent simply refers to the exponent used in the second term of the number in scientific notation. In this case, $6.022 \times 10^{23}$ has an exponent of $23$.
 
 ## Mantissa
 
-The mantissa can be essentially thought of as the leading number in the scientific notation seen earlier. For example, in 6.022 ×1023, the mantissa is.022. The six is omitted, because mantissa is the name specifically of the portion of the number that follows the decimal point. This may seem useless, since the six is rather important to the value of the number, in this case. This is true! However, if we operate in binary, the usefulness of this distinction becomes clear.
+The mantissa can be essentially thought of as the leading number in the scientific notation seen earlier. For example, in $6.022 \times 10^{23}$, the mantissa is $.022$. The six is omitted, because mantissa is the name specifically of the portion of the number that follows the decimal point. This may seem useless, since the six is rather important to the value of the number, in this case. This is true! However, if we operate in binary, the usefulness of this distinction becomes clear.
 
 # The Representation of Floating Point Numbers
 
 Since the number will be represented in binary, let’s do that conversion now:
-$$ 01100110111111110000101010101000 $$
-
+$$01100110111111110000101010101000$$
 This is (likely) incredibly unhelpful.
 
 To break this down into a more useful format, let’s separate the parts of the number:
@@ -48,24 +57,28 @@ The first number here, `0`, is the sign. This should be familiar from any previo
 
 The next segment of the number is the exponent: `11001101`
 
-This evaluates to the decimal number $205$. According to the IEEE-754 standard, we subtract $127$ to get $78$, which tells us that the target number is $M \times 2^78$$, where $M$ is our mantissa (which we have not yet encountered).
+This evaluates to the decimal number $205$. According to the IEEE-754 standard, we subtract $127$ to get $78$, which tells us that the target number is $M \times 2^78$, where $M$ is our mantissa (which we have not yet encountered).
 
 ## The Mantissa
 
 Following this, we get the final twenty-three bits, which form the mantissa:
+
 `11111110000101010101000`
 
 This can be seen as a binary-equivalent of the mantissa format we’ve seen earler. Note that the mantissa only includes digits present _after_ the point. In binary, We can assume that the digit _before_ the point is _always_ $1$, since it can only be either $1$ or $0$, and a leading $0$ could be expressed by shifting the entire number left and decreasing the exponent.
 
 Thus, we can envision the number as follows (using a ficitonal binary-point notation):[^1]
+
 $$1.11111110000101010101000$$
+
 Which can be expressed as:
-$$ 1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8}... = 1.9925127029418945 $$
+
+$$1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8}... = 1.9925127029418945$$
 
 ## Putting It All Together
 
 This gives us a final floating point value of:
-$$ 1.9925127029418945 \times 2^{78} $$
+$$1.9925127029418945 \times 2^{78}$$
 
 # Why Is That A Problem?
 
@@ -74,7 +87,7 @@ $$ 1.9925127029418945 \times 2^{78} $$
 Quite simply, this number is wrong.
 
 The above calculates out as follows:
-$$ 1.9925127029418945 \times 2^{78} = 602200013124147498450944 \neq 602200000000000000000000 = 6.022 \times 10^{23} $$
+$1.9925127029418945 \times 2^{78} = 602200013124147498450944 \neq 602200000000000000000000 = 6.022 \times 10^{23}$$
 
 The difference between the number we mean to represent, and the number actually represented is $13124147498450944$, or about $0.000021793669\%$.
 
@@ -88,15 +101,15 @@ As a thought exercise, let's move back to decimal-space.
 
 Take the following calculation:
 
-$$ \frac{1}{3} + \frac{2}{3} = 1 $$
+$$\frac{1}{3} + \frac{2}{3} = 1$$
 
 This is trivial with fractions, but becomes a bit odd-looking with decimals.
 
-$$ 0.333... + 0.666... = 0.999... = 1 $$
+$$0.333... + 0.666... = 0.999... = 1$$
 
 So far, no issues. However, we are relying heavily on 'repeating decimals' in order to represent these fractions correctly as decimal numbers[^2]. Let's explore what happens if we are limited in how many digits we can represent. For this experiment, let's pick five significant digits:
 
-$$ 0.33333 + 0.66666 = 0.99999 \neq 1 $$
+$$0.33333 + 0.66666 = 0.99999 \neq 1$$
 
 This is a contrived example, but illustrates the point that in any given base (in this case base 10), there are numbers that can only be represented with infinite digits.
 
@@ -175,7 +188,7 @@ class Currency {
 
 Since the backing type of a fixed point number is an integer, the maximum value that can be represented is the maximum value of an integer divided by $10$ raised to the power of the number of digits of precision chosen, given in the following formula:
 
-$$ 18446744073709551615 \div 10^n $$
+$$18446744073709551615 \div 10^n$$
 
 In the case of two digits of precision (cent-level precision), this means that the largest dollar value representable is $\$184,467,440,737,095,516.15$, or approximately $184$ quadrillion dollars.
 
@@ -193,7 +206,7 @@ It may have been noticed that the example class above only includes methods for 
 
 This is because if we were to just blindly multiply the underlying integers together, absurdity would ensue:
 
-$$ \$5.00 \times \$5.00 = 500¢ \times 500¢ = 250000 = \$2,500.00 $$
+$$\$5.00 \times \$5.00 = 500¢ \times 500¢ = 250000 = \$2,500.00$$
 
 This is not actually the issue it appears to be, as you never actually multiply currency by other currency.
 
@@ -203,8 +216,8 @@ In the above examble, where we multiplied $\$5.00$ by $\$5.00$, we would actuall
 
 In no cases is money ever multiplied by other money. In most cases, money is multiplied by a rate, for example one of the following:
 
-$$ 5 \frac{\$}{\text{hr}} \times 5\text{hrs} = \$25.00 $$
-$$ \$4.00 \times 9\% \text{tax} = \$4.0 \times 1.09 = \$5.45 $$
+$$5 \frac{\$}{\text{hr}} \times 5\text{hrs} = \$25.00$$
+$$\$4.00 \times 9\% \text{tax} = \$4.0 \times 1.09 = \$5.45$$
 
 Since all we need to do is ensure that the operand of our multiplication or division is a scalar, and not currency, we can implement the missing methods accordingly.
 
@@ -279,7 +292,9 @@ If instead the dinero objects are passed through _all_ of the code in place of `
 If the precision on created `Dinero` objects is specified as, for example, 10, calculations are guaranteed a precision down to $\frac{1}{1000,000,000}\text{cents}$, or one hundred millionth of a cent.
 
 Using the formula above, the largest monetary value representable by this precision is
-$$ 18446744073709551615 \div 10^{10} = 1844674407.3709551615 \approx \$1,844,674,407.37 $$
+
+$$18446744073709551615 \div 10^{10} = 1844674407.3709551615 \approx \$1,844,674,407.37$$
+
 or a little less than 2 billion dollars.
 
 ### Minimizing Conversions
