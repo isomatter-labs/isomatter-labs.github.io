@@ -289,7 +289,7 @@ If instead the dinero objects are passed through _all_ of the code in place of `
 
 ### Higher Precision
 
-If the precision on created `Dinero` objects is specified as, for example, 10, calculations are guaranteed a precision down to $\frac{1}{1000,000,000}\text{cents}$, or one hundred millionth of a cent.
+If the precision on created `Dinero` objects is specified as, for example, 10, calculations are guaranteed a precision down to $$\frac{1}{1000,000,000}¢$$, or one hundred millionth of a cent.
 
 Using the formula above, the largest monetary value representable by this precision is
 
