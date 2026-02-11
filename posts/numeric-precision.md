@@ -5,6 +5,50 @@ author: M Cooper Healy
 date: 2026-02-06
 ---
 
+At Nabis, numeric precision isn’t an academic footnote — it’s a core reliability requirement. Every price we display, every revenue share we calculate, and every promotion we tailor relies on numbers that must be consistent, accurate, and trustworthy throughout complex pipelines. Even tiny errors in representation or rounding can cascade into incorrect pricing, misaligned incentives, and ultimately a poor partner or customer experience. Getting number precision right protects trust, avoids bugs that are painful to debug, and ensures our platform scales with the financial rigor our brands and retailers depend on.
+
+# What's the problem?
+
+As a thought exercise, take the following calculation:
+
+$$\frac{1}{3} + \frac{2}{3} = 1$$
+
+This is trivial with fractions, but becomes a bit odd-looking with decimals.
+
+$$0.333... + 0.666... = 0.999... = 1$$
+
+So far, no issues. However, we are relying heavily on 'repeating decimals' in order to represent these fractions correctly as decimal numbers[^2]. Let's explore what happens if we are limited in how many digits we can represent. For this experiment, let's pick five significant digits:
+
+$$0.33333 + 0.66666 = 0.99999 \neq 1$$
+
+This is a contrived example, but illustrates the point that in any given base (in this case base 10), there are numbers that can only be represented with infinite digits.
+
+The same holds true for binary. The binary `float32` encoding of `0.1` is `00111101110011001100110011001101`, which equals $0.100000001490116119384765625$.
+
+This gives rise to the famous non-intuitive computer math example shown here in Node version `18.18.2`.
+
+```js
+> 0.1 + 0.2
+0.30000000000000004
+```
+
+Again, the error is small, and wouldn't register in most calculations, but repeated calculations can easily cause large issues:
+
+```js
+> total = 0.1
+0.1
+> for (let i=0; i < 1000; i++) total += 0.1;
+100.09999999999859
+```
+
+By adding 10 cents at a time, $\$100.00$ has become $\$100.09$, which is clearly an issue.
+
+## Rounding Error
+
+The issue with repeated calculation is simple: every time you calculate something with floating point numbers, the result of that calculation is also stored as a floating point number, which may be slightly imprecise, as shown above in our $.022 \times 10^23$ example.
+
+Each successive calculation builds upon this imprecision, since the input to each calculation is the (slightly incorrect) output of the previous calculation.
+
 # What is a `number` anyway?
 
 Javascript (and by extension TypeScript) use 64-bit floating point numbers as the backing type for number.
@@ -80,64 +124,12 @@ $$1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8}... = 1.9925127029418945$$
 This gives us a final floating point value of:
 $$1.9925127029418945 \times 2^{78}$$
 
-# Why Is That A Problem?
-
-## Imperfect Representation
-
 Quite simply, this number is wrong.
 
 The above calculates out as follows:
 $1.9925127029418945 \times 2^{78} = 602200013124147498450944 \neq 602200000000000000000000 = 6.022 \times 10^{23}$$
 
 The difference between the number we mean to represent, and the number actually represented is $13124147498450944$, or about $0.000021793669\%$.
-
-## So What?
-
-This is... negligible, and certainly fine for most calculations. Usually the error from representation itself isn't large enough to matter, and the majority of the issues happen when you attempt to use these numbers for calculations.
-
-## "Digit Limits"
-
-As a thought exercise, let's move back to decimal-space.
-
-Take the following calculation:
-
-$$\frac{1}{3} + \frac{2}{3} = 1$$
-
-This is trivial with fractions, but becomes a bit odd-looking with decimals.
-
-$$0.333... + 0.666... = 0.999... = 1$$
-
-So far, no issues. However, we are relying heavily on 'repeating decimals' in order to represent these fractions correctly as decimal numbers[^2]. Let's explore what happens if we are limited in how many digits we can represent. For this experiment, let's pick five significant digits:
-
-$$0.33333 + 0.66666 = 0.99999 \neq 1$$
-
-This is a contrived example, but illustrates the point that in any given base (in this case base 10), there are numbers that can only be represented with infinite digits.
-
-The same holds true for binary. The binary `float32` encoding of `0.1` is `00111101110011001100110011001101`, which equals $0.100000001490116119384765625$.
-
-This gives rise to the famous non-intuitive computer math example shown here in Node version `18.18.2`.
-
-```js
-> 0.1 + 0.2
-0.30000000000000004
-```
-
-Again, the error is small, and wouldn't register in most calculations, but repeated calculations can easily cause large issues:
-
-```js
-> total = 0.1
-0.1
-> for (let i=0; i < 1000; i++) total += 0.1;
-100.09999999999859
-```
-
-By adding 10 cents at a time, $\$100.00$ has become $\$100.09$, which is clearly an issue.
-
-## Rounding Error
-
-The issue with repeated calculation is simple: every time you calculate something with floating point numbers, the result of that calculation is also stored as a floating point number, which may be slightly imprecise, as shown above in our $.022 \times 10^23$ example.
-
-Each successive calculation builds upon this imprecision, since the input to each calculation is the (slightly incorrect) output of the previous calculation.
 
 # What Are The Alternatives?
 
