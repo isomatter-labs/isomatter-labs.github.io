@@ -16,7 +16,7 @@ This is trivial with fractions, but becomes a bit odd-looking with decimals.
 
 $$0.333... + 0.666... = 0.999... = 1$$
 
-So far, no issues. However, we are relying heavily on 'repeating decimals' in order to represent these fractions correctly as decimal numbers[^2]. Let's explore what happens if we are limited in how many digits we can represent. For this experiment, let's pick five significant digits:
+So far, no issues. However, we are relying heavily on 'repeating decimals' in order to represent these fractions correctly as decimal numbers[^2]. Let's explore what happens if we limit the number of digits we can represent. For this experiment, let's pick five significant digits:
 
 $$0.33333 + 0.66666 = 0.99999 \neq 1$$
 
@@ -27,6 +27,7 @@ This is a contrived example, but illustrates the point that in any given base (i
 Let's take a moment to make a trivial calculation: adding one tenth to two tenths:
 
 ```js
+// node v18
 > 0.1 + 0.2
 0.30000000000000004
 ```
@@ -52,22 +53,18 @@ For many calculations, even this is well within the bounds of acceptability.
 For financial calculations, which have legal ramifications and must be exact,
 this isn't an option.
 
-# What is a `number` anyway?
+# Why don't `number`s work? What is a `number` anyway?
 
 So why does this happen?
 
-Javascript (and by extension TypeScript) use 64-bit floating point numbers as the backing type for number.
+Javascript (and by extension TypeScript) use 64-bit floating point numbers as the backing type for `number`.
 We will use 32-bit floating point numbers throughout this document for brevity and clarity.
-
 The operant difference is that 64-bit floating point numbers have more precision.
-
-As we have seen in recent bugs in our monetary calculations in NY, this precision is still not enough.
-
-This may raise a further question as to what that means.
 
 Floating point numbers are, essentially, scientific notation using binary numbers.
 
-In the event that the reader is unfamiliar with the purpose and usage of scientific notation, the following section breaks down its main advantages.
+In the event of lack of familiarity with the purpose and usage of scientific notation,
+the following section breaks down its main advantages.
 
 # Scientific Notation
 
@@ -140,7 +137,15 @@ So if floating point numbers aren't an option for financial calculations, what _
 
 ## Binary Coded Decimal
 
-This section is under construction, since BCD is not a planned solution to the problem, but may be an informative digression.
+Binary coded decimal can essentially be thought of as manually storing a list
+of decimal digits, and performing mathematical operations the way one would by
+hand: a single digit at a time.
+
+While this guarantees arbitrary precision, it is extremely inefficient in both
+memory and computation speed.
+
+For this reason, it may not be the best candidate for calculations that need to
+be both accurate _and_ fast.
 
 ## Fixed Point Numbers
 
