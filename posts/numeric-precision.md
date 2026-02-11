@@ -1,6 +1,5 @@
 ---
-title: Number Precision
-subtitle: What It Is, and Why It Matters
+title: "Numeric Precision: What It Is, and Why It Matters"
 author: M Cooper Healy
 date: 2026-02-06
 ---
@@ -23,16 +22,22 @@ $$0.33333 + 0.66666 = 0.99999 \neq 1$$
 
 This is a contrived example, but illustrates the point that in any given base (in this case base 10), there are numbers that can only be represented with infinite digits.
 
-The same holds true for binary. The binary `float32` encoding of `0.1` is `00111101110011001100110011001101`, which equals $0.100000001490116119384765625$.
+## A Surprising Calculation
 
-This gives rise to the famous non-intuitive computer math example shown here in Node version `18.18.2`.
+Let's take a moment to make a trivial calculation: adding one tenth to two tenths:
 
 ```js
 > 0.1 + 0.2
 0.30000000000000004
 ```
 
-Again, the error is small, and wouldn't register in most calculations, but repeated calculations can easily cause large issues:
+What happened here?
+
+Just like our earlier example of adding one third to two thirds,
+we are running into an issue with a number that requires an infinite number of digits to be stored properly in binary.
+The binary `float32` encoding of `0.1` is `00111101110011001100110011001101`, which equals $0.100000001490116119384765625$.
+
+This error is really really small, but repeated calculations can begin to cause issues:
 
 ```js
 > total = 0.1
@@ -43,13 +48,13 @@ Again, the error is small, and wouldn't register in most calculations, but repea
 
 By adding 10 cents at a time, $\$100.00$ has become $\$100.09$, which is clearly an issue.
 
-## Rounding Error
-
-The issue with repeated calculation is simple: every time you calculate something with floating point numbers, the result of that calculation is also stored as a floating point number, which may be slightly imprecise, as shown above in our $.022 \times 10^23$ example.
-
-Each successive calculation builds upon this imprecision, since the input to each calculation is the (slightly incorrect) output of the previous calculation.
+For many calculations, even this is well within the bounds of acceptability.
+For financial calculations, which have legal ramifications and must be exact,
+this isn't an option.
 
 # What is a `number` anyway?
+
+So why does this happen?
 
 Javascript (and by extension TypeScript) use 64-bit floating point numbers as the backing type for number.
 We will use 32-bit floating point numbers throughout this document for brevity and clarity.
@@ -129,9 +134,9 @@ Quite simply, this number is wrong.
 The above calculates out as follows:
 $1.9925127029418945 \times 2^{78} = 602200013124147498450944 \neq 602200000000000000000000 = 6.022 \times 10^{23}$$
 
-The difference between the number we mean to represent, and the number actually represented is $13124147498450944$, or about $0.000021793669\%$.
-
 # What Are The Alternatives?
+
+So if floating point numbers aren't an option for financial calculations, what _are_ the options?
 
 ## Binary Coded Decimal
 
